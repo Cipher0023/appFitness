@@ -5,9 +5,12 @@ class CreateNutritionService {
     async execute({name, weight, height, age, gender, objective, level}: DataProps){
 
         try{
+            console.log ("try initiated")
             const genAI = new GoogleGenerativeAI(process.env.API_KEY!)
             const model = genAI.getGenerativeModel({model: "gemini-1.5-flash"})
 
+
+            console.log("sending the mensage")
             const response = await model.generateContent(`Crie uma dieta completa para uma pessoa com
                  nome: ${name} do sexo ${gender} com peso atual: ${weight}kg, altura: ${height}, 
                  idade: ${age} anos e com foco e objetivo em ${objective}, atualmente nível de 
@@ -22,14 +25,19 @@ class CreateNutritionService {
                   objetivo dela e não retorne nenhuma observação alem das passadas no prompt, retorne em 
                   json e nenhuma propriedade pode ter acento.`)
             
-            if(response.response && response.response.candidates){
-                const jsonText = response.response.candidates[0]?.content.parts[0].text as string;
-
-                return { data: jsonText}
-            }
+                
 
             console.log(JSON.stringify(response, null, 2));
 
+            if(response.response && response.response.candidates){
+                const jsonText = response.response.candidates[0]?.content.parts[0].text as string;
+
+                let jsonString = jsonText.replace(/```\w*\n/g, '').replace(/\n```/g,'').trim();
+                let jsonObject = JSON.parse(jsonString)
+
+
+                return { data: jsonObject}
+            }
         }
         catch(err){
             console.error("Erro Json: ", err)
