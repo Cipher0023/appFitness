@@ -10,6 +10,13 @@ export default function RootLayout() {
           headerShown:false
         }}
       />
+      <Stack.Screen
+        name= "step/index"
+
+        options={{
+          headerShown:false
+        }}
+      />
     </Stack>
   );
 }
