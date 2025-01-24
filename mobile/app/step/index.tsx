@@ -73,6 +73,10 @@ export default function Step(){
                     keyboardType="default"
                 />
 
+                <Pressable style= {styles.button}>
+                    <Text style= {styles.buttonText}>Avançar</Text>
+                </Pressable>
+
                 
 
             </ScrollView>
@@ -94,5 +98,18 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color: colors.white,
         marginBottom: 8
+    },
+    button:{
+        backgroundColor: colors.blue,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginTop: 16
+    },
+    buttonText:{
+        color: colors.white,
+        fontSize:20,
+        fontWeight: 'bold'
     }
 })
