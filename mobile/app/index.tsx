@@ -15,7 +15,7 @@ export default function Index() {
 
       <Text style={styles.text}>seu app de dietas feitas por IA's</Text>
 
-      <Link href="/step"asChild>
+      <Link href="/step" asChild>
         <Pressable style={styles.button}>
           <Text style={styles.buttonText}>Gerar dieta</Text>
         </Pressable>
