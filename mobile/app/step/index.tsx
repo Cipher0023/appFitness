@@ -1,4 +1,12 @@
-import { Text, View, Image, StyleSheet, Pressable, ScrollView} from "react-native";
+import {
+    Text,
+    View,
+    Image,
+    StyleSheet,
+    Pressable,
+    ScrollView
+} from "react-native";
+
 import {colors} from '../../constants/colors'
 import { Header } from '../../components/header';
 import {Input} from '../../components/input/index';
@@ -6,6 +14,9 @@ import {Input} from '../../components/input/index';
 import  {z} from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { router } from 'expo-router'
+import { useDataStore} from '../../store/data'
+import { FadeTransition } from "@react-navigation/bottom-tabs/lib/typescript/commonjs/src/TransitionConfigs/TransitionPresets";
 
 
 const schema = z.object({
@@ -23,6 +34,21 @@ export default function Step(){
     const {control, handleSubmit, formState: {errors, isValid}} = useForm <FormData> ({
         resolver: zodResolver(schema)
     })
+
+    const setPageOne = useDataStore(state =>state.setPageOne)
+
+    function handleCreate(data: FormData){
+        console.log("sending first page data");
+        setPageOne({
+            name:data.name,
+            age: data.age,
+            height: data.height,
+            weight: data.weight,
+        })
+
+        router.push("/create")
+
+    }
 
     return(
 
@@ -73,7 +99,7 @@ export default function Step(){
                     keyboardType="default"
                 />
 
-                <Pressable style= {styles.button}>
+                <Pressable style= {styles.button} onPress={handleSubmit(handleCreate)}>
                     <Text style= {styles.buttonText}>Avançar</Text>
                 </Pressable>
 
